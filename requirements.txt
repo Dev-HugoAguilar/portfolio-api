@@ -1,0 +1,11 @@
+# =============================================================================
+# API de dashboards del portafolio — dependencias de ejecución
+# Versiones fijadas tras verificar la instalación (Python 3.12).
+# =============================================================================
+fastapi==0.118.3
+uvicorn[standard]==0.37.0
+pydantic==2.12.4
+pydantic-settings==2.12.0
+pymongo==4.15.4
+# Lectura de los boletines XLSX/XLSM de la CNBV (datos públicos reales).
+openpyxl==3.1.5
