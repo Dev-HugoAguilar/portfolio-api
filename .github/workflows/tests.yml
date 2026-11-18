@@ -33,6 +33,7 @@ jobs:
           # tokens jamás se exime.
           detectadas=$(grep -rIn --exclude-dir=.git --exclude-dir=.github -E \
             '(mongodb(\+srv)?://[^"[:space:]]*:[^"[:space:]]*@|sk-[A-Za-z0-9]{16,}|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16}|BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY)' . \
+            | grep -vE 'mongodb(\+srv)?://[^:]+:<[A-Za-z0-9_]+>@' \
             | grep -vE 'mongodb(\+srv)?://(usuario|user|username):(clave|pass|password|contraseña)@' || true)
           if [ -n "$detectadas" ]; then
             echo "$detectadas"; echo "Se detectaron posibles credenciales"; exit 1
@@ -60,5 +61,6 @@ jobs:
 
       - name: Comprobar sintaxis de los scripts
         run: python -m compileall -q .
+
 
 
