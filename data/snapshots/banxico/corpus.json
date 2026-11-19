@@ -1,0 +1,253 @@
+{
+  "snapshot": "2026-11-15",
+  "sources": [
+    {
+      "source_id": "BM-2026-11-05",
+      "title": "Anuncio de Política Monetaria",
+      "date": "2026-11-05",
+      "kind": "Comunicado",
+      "url": "https://www.banxico.org.mx/publicaciones-y-prensa/anuncios-de-las-decisiones-de-politica-monetaria/%7B43236252-D06E-5231-27E8-058810A86A52%7D.pdf"
+    },
+    {
+      "source_id": "BM-2026-08-26",
+      "title": "Informe trimestral, abril–junio 2026",
+      "date": "2026-08-26",
+      "kind": "Informe trimestral",
+      "url": "https://www.banxico.org.mx/publicaciones-y-prensa/resumenes-visuales/informe-trimestral-html/informe-trimestral-abr-jun-00005.html"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "BM-2026-11-05-TASA",
+      "source_id": "BM-2026-11-05",
+      "heading": "Decisión sobre la tasa",
+      "content": "El 5 de noviembre de 2026, la Junta de Gobierno redujo en 25 puntos base el objetivo de la tasa interbancaria a un día, a 6.25%. La medida entró en vigor el 6 de noviembre de 2026.",
+      "keywords": [
+        "tasa",
+        "decisión",
+        "25 puntos base",
+        "6.25",
+        "vigencia",
+        "noviembre"
+      ]
+    },
+    {
+      "chunk_id": "BM-2026-11-05-INFLACION",
+      "source_id": "BM-2026-11-05",
+      "heading": "Inflación de septiembre a octubre",
+      "content": "Entre la primera quincena de septiembre y la primera de octubre de 2026, la inflación general pasó de 3.42% a 3.62%. En el mismo intervalo, la subyacente disminuyó ligeramente de 3.79% a 3.78%.",
+      "keywords": [
+        "inflación",
+        "general",
+        "subyacente",
+        "octubre",
+        "septiembre",
+        "quincena",
+        "3.42",
+        "3.62"
+      ]
+    },
+    {
+      "chunk_id": "BM-2026-11-05-RIESGOS",
+      "source_id": "BM-2026-11-05",
+      "heading": "Balance de riesgos para la inflación",
+      "content": "El comunicado identifica riesgos al alza como persistencia de la inflación subyacente, depreciación del peso, disrupciones comerciales o geopolíticas, afectaciones climáticas y presiones de costos. Entre los riesgos a la baja menciona menor actividad y menor traspaso de costos.",
+      "keywords": [
+        "riesgos",
+        "alza",
+        "baja",
+        "peso",
+        "costos",
+        "geopolítica",
+        "clima",
+        "subyacente"
+      ]
+    },
+    {
+      "chunk_id": "BM-2026-11-05-PRONOSTICO",
+      "source_id": "BM-2026-11-05",
+      "heading": "Pronósticos trimestrales de inflación general",
+      "content": "El cuadro del comunicado presenta para el INPC 3.3% en 2026-T3, 3.7% en 2026-T4 y 3.0% en 2027-T4. El Banco de México anticipa la convergencia a la meta de 3% en el cuarto trimestre de 2027.",
+      "keywords": [
+        "pronóstico",
+        "meta",
+        "3%",
+        "convergencia",
+        "2027",
+        "trimestre",
+        "INPC"
+      ]
+    },
+    {
+      "chunk_id": "BM-2026-08-26-INFLACION-TRIMESTRAL",
+      "source_id": "BM-2026-08-26",
+      "heading": "Inflación entre el primer y segundo trimestre",
+      "content": "El resumen del informe trimestral señala que la inflación general anual pasó de 4.13% en el primer trimestre de 2026 a 3.92% en el segundo. La inflación subyacente bajó de 4.49% a 4.16% en ese periodo.",
+      "keywords": [
+        "inflación",
+        "general",
+        "subyacente",
+        "primer trimestre",
+        "segundo trimestre",
+        "4.13",
+        "3.92",
+        "4.49",
+        "4.16"
+      ]
+    },
+    {
+      "chunk_id": "BM-2026-08-26-META",
+      "source_id": "BM-2026-08-26",
+      "heading": "Meta de inflación",
+      "content": "El informe trimestral de abril–junio de 2026 indica que se esperaba que la inflación general alcanzara la meta de 3% en 2027.",
+      "keywords": [
+        "meta",
+        "3%",
+        "inflación general",
+        "2027",
+        "pronóstico"
+      ]
+    },
+    {
+      "chunk_id": "BM-2026-08-26-ACTIVIDAD",
+      "source_id": "BM-2026-08-26",
+      "heading": "Actividad económica nacional",
+      "content": "El informe describe un aumento del PIB mexicano en el segundo trimestre de 2026 después de una contracción en el trimestre previo. Las actividades secundarias, terciarias y primarias contribuyeron positivamente al repunte.",
+      "keywords": [
+        "PIB",
+        "actividad",
+        "economía",
+        "segundo trimestre",
+        "contracción",
+        "crecimiento"
+      ]
+    }
+  ],
+  "forecast": {
+    "goal": 3,
+    "general": [
+      {
+        "period": "2025-T4",
+        "value": 3.7,
+        "status": "observado"
+      },
+      {
+        "period": "2026-T1",
+        "value": 4.1,
+        "status": "observado"
+      },
+      {
+        "period": "2026-T2",
+        "value": 3.9,
+        "status": "observado"
+      },
+      {
+        "period": "2026-T3",
+        "value": 3.3,
+        "status": "observado"
+      },
+      {
+        "period": "2026-T4",
+        "value": 3.7,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2027-T1",
+        "value": 3.4,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2027-T2",
+        "value": 3.3,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2027-T3",
+        "value": 3.2,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2027-T4",
+        "value": 3.0,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2028-T1",
+        "value": 3.0,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2028-T2",
+        "value": 3.0,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2028-T3",
+        "value": 3.0,
+        "status": "pronóstico"
+      }
+    ],
+    "core": [
+      {
+        "period": "2025-T4",
+        "value": 4.3,
+        "status": "observado"
+      },
+      {
+        "period": "2026-T1",
+        "value": 4.5,
+        "status": "observado"
+      },
+      {
+        "period": "2026-T2",
+        "value": 4.2,
+        "status": "observado"
+      },
+      {
+        "period": "2026-T3",
+        "value": 3.9,
+        "status": "observado"
+      },
+      {
+        "period": "2026-T4",
+        "value": 3.7,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2027-T1",
+        "value": 3.4,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2027-T2",
+        "value": 3.3,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2027-T3",
+        "value": 3.2,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2027-T4",
+        "value": 3.0,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2028-T1",
+        "value": 3.0,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2028-T2",
+        "value": 3.0,
+        "status": "pronóstico"
+      },
+      {
+        "period": "2028-T3",
+        "value": 3.0,
+        "status": "pronóstico"
+      }
+    ]
+  }
+}
