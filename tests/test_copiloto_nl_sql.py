@@ -7,7 +7,7 @@ import sqlite3
 
 import pytest
 
-from app.config import PROJECT_ROOT, Settings
+from app.config import BACKEND_DIR, Settings
 from app.nl_sql import service as nl_service
 from app.nl_sql.service import CopilotoNlSql, QuestionError
 
@@ -46,7 +46,7 @@ class FakeAtlas:
 def servicio(tmp_path, db=None, **overrides) -> CopilotoNlSql:
     valores = {
         "nl_sql_data_path": str(
-            PROJECT_ROOT / "dashboards" / "copiloto-nl-sql" / "runtime" / "data.json"
+            BACKEND_DIR / "data" / "snapshots" / "copiloto" / "data.json"
         ),
         "nl_sql_db_path": str(tmp_path / "wdi.sqlite3"),
         "nl_sql_audit_enabled": True,

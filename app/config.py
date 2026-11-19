@@ -118,7 +118,7 @@ class Settings(BaseSettings):
     rag_banxico_collection: str = "rag_banxico_chunks"
     #: Corpus versionable de la demo (fuente única para frontend, API y carga).
     rag_banxico_corpus_path: str = str(
-        PROJECT_ROOT / "dashboards" / "briefing-banxico" / "runtime" / "corpus.json"
+        BACKEND_DIR / "data" / "snapshots" / "banxico" / "corpus.json"
     )
     #: Proveedor opcional compatible con OpenAI. Sin las tres variables, la
     #: respuesta se construye solo con los fragmentos recuperados.
@@ -129,7 +129,7 @@ class Settings(BaseSettings):
     # --- Copiloto NL-to-SQL · indicadores WDI de México --------------------
     #: Snapshot versionable: fuente única para la interfaz, la API y SQLite.
     nl_sql_data_path: str = str(
-        PROJECT_ROOT / "dashboards" / "copiloto-nl-sql" / "runtime" / "data.json"
+        BACKEND_DIR / "data" / "snapshots" / "copiloto" / "data.json"
     )
     #: Índice SQLite generado en tiempo de ejecución (backend/data está ignorado).
     nl_sql_db_path: str = str(
@@ -143,7 +143,7 @@ class Settings(BaseSettings):
     # --- Data Incident Commander (demo determinista) ------------------------
     #: Snapshot WDI real de 21 observaciones; las fallas se inyectan en copias.
     incident_data_path: str = str(
-        PROJECT_ROOT / "dashboards" / "data-incident-commander" / "runtime" / "data.json"
+        BACKEND_DIR / "data" / "snapshots" / "incident-commander" / "data.json"
     )
 
     # --- Atlas comercial · Demanda y ventas (Walmart M5) ---------------------

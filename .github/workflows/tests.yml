@@ -57,7 +57,7 @@ jobs:
           python -m pip install -r requirements-dev.txt
 
       - name: Ejecutar pruebas
-        run: python -m pytest --collect-only -q
+        run: python -m pytest -q
 
       - name: Comprobar sintaxis de los scripts
         run: python -m compileall -q .

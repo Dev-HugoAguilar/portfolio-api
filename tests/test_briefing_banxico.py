@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 
-from app.config import PROJECT_ROOT, Settings
+from app.config import BACKEND_DIR, Settings
 from app.rag_banxico import service as rag_service
 from app.rag_banxico.service import BriefingBanxico, puntuar
 
@@ -19,7 +19,7 @@ class FakeDatabase:
 def servicio(**overrides) -> BriefingBanxico:
     valores = {
         "rag_banxico_corpus_path": str(
-            PROJECT_ROOT / "dashboards" / "briefing-banxico" / "runtime" / "corpus.json"
+            BACKEND_DIR / "data" / "snapshots" / "banxico" / "corpus.json"
         ),
         "llm_base_url": None,
         "llm_api_key": None,

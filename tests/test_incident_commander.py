@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from app.config import PROJECT_ROOT, Settings
+from app.config import BACKEND_DIR, Settings
 from app.incident_commander.service import (
     IncidentCommander,
     PlanBlocked,
@@ -16,7 +16,7 @@ from app.incident_commander.service import (
     ScenarioError,
 )
 
-SNAPSHOT = PROJECT_ROOT / "dashboards" / "data-incident-commander" / "runtime" / "data.json"
+SNAPSHOT = BACKEND_DIR / "data" / "snapshots" / "incident-commander" / "data.json"
 
 
 def servicio() -> IncidentCommander:

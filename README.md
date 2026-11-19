@@ -26,7 +26,7 @@ La persistencia de los tableros es **una sola**: el clúster gratuito de MongoDB
 Atlas (512 MB, compartido con otros proyectos). La API no consulta BigQuery ni la
 CNBV para servir: lee la versión publicada. La regla de qué se publica, qué se
 calcula fuera y con qué presupuesto está en
-[`docs/ALMACENAMIENTO.md`](../docs/ALMACENAMIENTO.md); el detalle de la
+`docs/ALMACENAMIENTO.md` (documento interno del monorepo, no publicado); el detalle de la
 conciliación de cada migración, en los documentos de cada tablero.
 
 > Dos demos nuevas no usan Atlas como almacén principal: el Copiloto NL-to-SQL
@@ -38,7 +38,7 @@ conciliación de cada migración, en los documentos de cada tablero.
 > lenguaje opcional. Sin las variables `LLM_BASE_URL`, `LLM_API_KEY` y `LLM_MODEL`,
 > el briefing responde de forma extractiva y el copiloto usa solo su parser local.
 > El briefing usa `portfolio_demos.rag_banxico_chunks`; instrucciones en
-> [`dashboards/briefing-banxico/README.md`](../dashboards/briefing-banxico/README.md).
+> [`banxico-evidence-briefing`](https://github.com/Dev-HugoAguilar/banxico-evidence-briefing).
 > Data Incident Commander es determinista y no llama a ningún modelo.
 
 > El dataset sintético (`demo_rentabilidad_2024_2025`) **se archivó fuera del
@@ -75,7 +75,7 @@ configuran las tres variables del modelo; no usa embeddings ni búsqueda vectori
 ## 2. Estructura
 
 ```
-backend/
+./   (raíz de este repositorio)
 ├── app/
 │   ├── config.py                 # ajustes desde entorno (.env), límites y CORS
 │   ├── main.py                   # app FastAPI, ciclo de vida (Mongo + índices)
@@ -149,7 +149,7 @@ se levanta un MongoDB local: la versión publicada vive en el clúster y la API 
 de ahí. Se comprueba con `python -m scripts.verificar_atlas`.
 
 ```bash
-cd backend
+# desde la raíz del repositorio clonado
 python -m venv .venv
 .venv\Scripts\activate                       # Windows
 pip install -r requirements-dev.txt
@@ -160,8 +160,8 @@ python -m scripts.seed_demo                  # opcional: dataset sintético (des
 python -m uvicorn app.main:app --reload --port 8000
 ```
 
-* API: <http://127.0.0.1:8000/api/v1>
-* Documentación interactiva: <http://127.0.0.1:8000/api/docs>
+* API: <http://127.0.0.1:8010/api/v1>
+* Documentación interactiva: <http://127.0.0.1:8010/api/docs>
 * Salud: `GET /api/v1/health/ready`
 
 ### 3.3 Opción B — Docker Compose
@@ -189,7 +189,7 @@ curl http://127.0.0.1:8001/api/v1/health/ready
 ### 3.4 Pruebas
 
 ```bash
-cd backend
+# desde la raíz del repositorio clonado
 .venv\Scripts\python -m pytest -q
 ```
 
@@ -200,7 +200,7 @@ disponible, esas pruebas se **omiten** con un mensaje explícito en lugar de
 falsear resultados con mocks.
 
 Las pruebas del comparativo bancario importan **boletines reales** desde
-`backend/data/cnbv`; si el archivo no está descargado, se omiten con un mensaje
+`data/cnbv`; si el archivo no está descargado, se omiten con un mensaje
 que indica el comando para obtenerlo. Nunca se sustituyen por datos sintéticos.
 
 Además de las pruebas, hay una comprobación de ida y vuelta contra el archivo
@@ -257,12 +257,12 @@ python -m scripts.verificar_cnbv     # 56.248 hechos conciliados, 0 discrepancia
 | POST | `/api/v1/incident-commander/runs` | Inicia un escenario en copia temporal |
 | POST | `/api/v1/incident-commander/runs/{run_id}/approve` | Rechaza o simula una reparación |
 
-Contratos: [`docs/CNBV-COMPARATIVO-BANCARIO.md`](../docs/CNBV-COMPARATIVO-BANCARIO.md)
-(datos reales) y [`docs/API-DASHBOARD-RENTABILIDAD.md`](../docs/API-DASHBOARD-RENTABILIDAD.md)
+Contratos: `docs/CNBV-COMPARATIVO-BANCARIO.md` (documento interno del monorepo, no publicado)
+(datos reales) y [`docs/API-DASHBOARD-RENTABILIDAD.md`(documento interno del monorepo, no publicado)
 (dataset sintético de desarrollo). Instrucciones de las demos:
-[Briefing Banxico](../dashboards/briefing-banxico/README.md),
-[Copiloto NL-to-SQL](../dashboards/copiloto-nl-sql/README.md) y
-[Data Incident Commander](../dashboards/data-incident-commander/README.md).
+[Briefing Banxico](https://github.com/Dev-HugoAguilar/banxico-evidence-briefing),
+[Copiloto NL-to-SQL](https://github.com/Dev-HugoAguilar/nl2sql-economic-copilot) y
+[Data Incident Commander](https://github.com/Dev-HugoAguilar/data-incident-commander).
 
 ## 5. Decisiones que conviene conocer
 
@@ -316,7 +316,7 @@ Contratos: [`docs/CNBV-COMPARATIVO-BANCARIO.md`](../docs/CNBV-COMPARATIVO-BANCAR
 * Tiempos medidos con las 30.000 líneas del dataset demostrativo (mismo equipo,
   en caliente): resumen de 365 días ~0,65 s, detalle paginado ~0,05 s,
   exportación CSV de 24 meses ~0,85 s. El desglose está en el
-  [contrato de la API](../docs/API-DASHBOARD-RENTABILIDAD.md) (§9.1).
+  el contrato de la API (documento interno del monorepo, no publicado) (§9.1).
 * Tiempos medidos con los 56.248 hechos reales de la CNBV: `resumen` ~0,12 s,
   `series` ~0,01 s, `detalle` ~0,01 s, `indicadores` ~0,01 s y `catalogo`
   ~0,41 s (lo más caro, porque agrega 56.248 hechos para listar 158 conceptos y
@@ -338,7 +338,7 @@ Contratos: [`docs/CNBV-COMPARATIVO-BANCARIO.md`](../docs/CNBV-COMPARATIVO-BANCAR
 * El boletín no se actualiza en el tiempo según su propia nota; para series
   revisadas la CNBV remite al Portafolio de Información.
 * Sin licencia de datos abiertos explícita: se atribuye la fuente y no se
-  redistribuyen los archivos (viven en `backend/data/`, fuera de Git).
+  redistribuyen los archivos (viven en `data/`, fuera de Git).
 * Los archivos originales no se sirven por la API: solo hechos normalizados y sus
   metadatos (URL, hash, fila de origen).
 
@@ -355,3 +355,20 @@ Contratos: [`docs/CNBV-COMPARATIVO-BANCARIO.md`](../docs/CNBV-COMPARATIVO-BANCAR
   milisegundos. Si el volumen crece, el siguiente paso es materializar agregados
   mensuales, no añadir un motor nuevo.
 * Los gráficos del frontend no están construidos: solo el contrato y ejemplos.
+
+## Pruebas
+
+```bash
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+```
+
+Estado verificado en el repositorio: **362 pruebas pasan y 11 se omiten**. Las
+omisiones no son fallos ocultos: requieren los boletines reales de la CNBV en
+`data/cnbv/` (periodos 202410, 202409 y 202310) y lo declaran con ese motivo. Los
+archivos se obtienen con `python -m scripts.importar_cnbv --descargar`; no se
+versionan.
+
+La integración continua ejecuta `pytest -q` completo, no una recolección. No se
+ejecuta ninguna ingesta contra Atlas: las pruebas usan MongoDB local o fixtures, y
+los snapshots públicos de las demos viven en `data/snapshots/`.
