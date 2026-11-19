@@ -77,7 +77,12 @@ def mongo_client():
 
 
 @pytest.fixture(scope="session")
-def settings(mongo_client) -> Settings:
+def settings() -> Settings:
+    """Ajustes de la aplicación apuntando a la base de pruebas.
+
+    No depende de MongoDB: las pruebas de dominio también comprueban que la
+    configuración apunte a la base aislada.
+    """
     ajustes = get_settings()
     assert ajustes.mongodb_db == TEST_DB, "la app debe apuntar a la base de pruebas"
     return ajustes
@@ -86,9 +91,12 @@ def settings(mongo_client) -> Settings:
 COLECCIONES_CNBV = [CNBV_BOLETINES, CNBV_FILAS, CNBV_HECHOS, CNBV_INDICADORES]
 
 
-@pytest.fixture(scope="session", autouse=True)
-def limpiar_cnbv_al_inicio(mongo_client):
-    """Deja vacías las colecciones CNBV de la base de pruebas al empezar.
+@pytest.fixture(scope="session")
+def _limpieza_cnbv(mongo_client):
+    """Deja vacías las colecciones CNBV de la base de pruebas, una sola vez.
+
+    No es `autouse`: solo se ejecuta cuando una prueba de integración pide
+    `mongo_db`. Así las pruebas de dominio no dependen de MongoDB.
 
     Las pruebas de la CNBV importan boletines reales; se limpian una sola vez para
     no arrastrar datos de ejecuciones anteriores. Nunca se borran bases ni
@@ -101,7 +109,7 @@ def limpiar_cnbv_al_inicio(mongo_client):
 
 
 @pytest.fixture()
-def mongo_db(mongo_client, settings):
+def mongo_db(mongo_client, settings, _limpieza_cnbv):
     """Base de pruebas vacía (ventas sintéticas), con los índices creados.
 
     Solo se vacían las colecciones del dataset sintético: las de la CNBV las
@@ -116,6 +124,24 @@ def mongo_db(mongo_client, settings):
     yield db
     for nombre in colecciones:
         db[nombre].delete_many({})
+
+
+#: Fixtures que exigen MongoDB real. Cualquier prueba que pida una de ellas se
+#: marca como `integracion` sin editar los archivos de prueba.
+FIXTURES_INTEGRACION = {"mongo_client", "mongo_db", "sample_dataset"}
+
+
+def pytest_collection_modifyitems(config, items):
+    """Marca automáticamente como `integracion` lo que toca MongoDB.
+
+    Permite separar `-m "not integracion"` (dominio, sin infraestructura) de
+    `-m integracion` (MongoDB real) sin depender de que cada archivo declare el
+    marcador a mano.
+    """
+    for item in items:
+        pedidas = set(getattr(item, "fixturenames", ()))
+        if pedidas & FIXTURES_INTEGRACION:
+            item.add_marker(pytest.mark.integracion)
 
 
 @pytest.fixture()
