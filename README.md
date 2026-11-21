@@ -198,9 +198,19 @@ Los tres archivos son pequeños, versionados y deterministas; la imagen los copi
 
 | Archivo | Servicio | Tamaño | SHA-256 (16) |
 |---|---|---|---|
-| `data/snapshots/banxico/corpus.json` | Briefing BANXICO | 7 168 B | `7e4a227349cc9085` |
+| `data/snapshots/banxico/corpus.json` | Briefing BANXICO | 6 915 B | `35d35e48a510281f` |
 | `data/snapshots/copiloto/data.json` | Copiloto NL → SQL | 4 416 B | `2d241c70db41ac6a` |
 | `data/snapshots/incident-commander/data.json` | Data Incident Commander | 5 482 B | `8483d4ee6c5427e8` |
+
+Tamaños y hashes corresponden al contenido versionado (LF), que es el que copia
+la imagen. Para comprobarlos:
+
+```bash
+for p in banxico/corpus.json copiloto/data.json incident-commander/data.json; do
+  git cat-file blob "HEAD:data/snapshots/$p" | wc -c
+  git cat-file blob "HEAD:data/snapshots/$p" | sha256sum | cut -c1-16
+done
+```
 
 El resto de `data/` (boletines de la CNBV, Atlas vial, marketing, M5) son
 entradas de importación: no se versionan ni se copian a la imagen, y se generan
