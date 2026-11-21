@@ -90,6 +90,70 @@ jobs:
           path: resultados/
           if-no-files-found: warn
 
+  imagen:
+    name: Imagen Docker (build, snapshots y salud)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Construir la imagen
+        run: docker build --tag portfolio-api:ci .
+
+      - name: Verificar que los snapshots de runtime están en la imagen
+        run: |
+          set -eu
+          # Sin estos tres archivos la API no arranca: los servicios los leen en
+          # su constructor. El check es sobre la imagen, no sobre el repositorio.
+          docker run --rm portfolio-api:ci sh -c '
+            set -eu
+            for archivo in \
+              /app/data/snapshots/banxico/corpus.json \
+              /app/data/snapshots/copiloto/data.json \
+              /app/data/snapshots/incident-commander/data.json; do
+              test -s "$archivo" || { echo "Falta $archivo en la imagen"; exit 1; }
+            done
+            ls -l /app/data/snapshots/*/*.json
+            echo "snapshots presentes en la imagen"
+          '
+
+      - name: Comprobar que los servicios abren los snapshots dentro de la imagen
+        run: |
+          set -eu
+          docker run --rm portfolio-api:ci python -c "
+          from app.config import get_settings
+          from app.nl_sql.service import CopilotoNlSql
+          from app.incident_commander.service import IncidentCommander
+          from app.rag_banxico.service import BriefingBanxico
+          ajustes = get_settings()
+          CopilotoNlSql(None, ajustes)
+          IncidentCommander(ajustes)
+          BriefingBanxico(None, ajustes)
+          print('los tres servicios abren sus snapshots dentro de la imagen')
+          "
+
+      - name: Arrancar el contenedor y comprobar /health/live
+        run: |
+          set -eu
+          docker run -d --name api-ci -p 18000:8000 portfolio-api:ci
+          ok=0
+          for _ in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18000/api/v1/health/live; then
+              echo; ok=1; break
+            fi
+            sleep 2
+          done
+          docker logs api-ci
+          test "$ok" = 1 || { echo "La API no respondió a /api/v1/health/live"; exit 1; }
+          # El proceso corre como usuario sin privilegios y la carpeta del
+          # índice SQLite del Copiloto es escribible.
+          docker exec api-ci id
+          docker exec api-ci test -w /app/data/copiloto_nl_sql
+
+      - name: Registro del contenedor y limpieza
+        if: always()
+        run: |
+          docker rm -f api-ci || true
+
   integracion:
     name: Integración con MongoDB
     runs-on: ubuntu-latest

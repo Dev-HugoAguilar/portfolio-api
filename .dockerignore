@@ -3,5 +3,13 @@ __pycache__/
 *.pyc
 .pytest_cache/
 tests/
-data/
 .env
+.git/
+.github/
+
+# `data/` solo aporta los snapshots de runtime. El resto son entradas de
+# importación (CNBV, Atlas vial, marketing, M5) que no se versionan ni se
+# copian a la imagen.
+data/**
+!data/snapshots
+!data/snapshots/**

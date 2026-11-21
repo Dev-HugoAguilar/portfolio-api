@@ -164,27 +164,47 @@ python -m uvicorn app.main:app --reload --port 8000
 * Documentación interactiva: <http://127.0.0.1:8010/api/docs>
 * Salud: `GET /api/v1/health/ready`
 
-### 3.3 Opción B — Docker Compose
+### 3.3 Opción B — imagen Docker
 
-Desde la raíz del proyecto:
+La imagen incluye código, dependencias **y los snapshots de runtime**. El
+despliegue completo (sitio + API bajo `/api` + MongoDB) se declara en el
+repositorio del sitio, en `deploy/docker-compose.yml`; aquí solo se construye y
+se prueba la imagen.
 
 ```bash
-docker compose up -d --build                 # API en contenedor + sitio
-docker compose ps                            # debe estar "healthy"
-curl http://127.0.0.1:8001/api/v1/health/ready
+docker build -t portfolio-api:local .
+docker run --rm -p 8000:8000 \
+  -e MONGODB_URI="$MONGODB_URI" -e MONGODB_DB="$MONGODB_DB" \
+  -e ALLOWED_ORIGINS="http://127.0.0.1:8080" \
+  portfolio-api:local
+curl http://127.0.0.1:8000/api/v1/health/ready
 ```
 
-* Compose **ya no levanta un MongoDB propio**: el backend recibe `MONGODB_URI`
-  desde el entorno y exige que exista (`${MONGODB_URI:?…}`). La base es la misma
-  de Atlas que usa la API fuera de Docker, así que no se duplican datos ni hay un
-  segundo juego de colecciones.
-* El backend se publica **solo** en `127.0.0.1:8001` (el 8000 queda libre para el
-  sitio estático).
-* Si otro proyecto local ya ocupa el 8001, cámbialo sin tocar el archivo:
-  `BACKEND_HOST_PORT=8011 docker compose up -d`.
-* El sitio existente se puede servir aparte con
-  `docker compose --profile frontend up -d` (nginx en `127.0.0.1:8080`) o con
-  `python -m http.server 8000` desde `dist/`.
+* El proceso corre como usuario sin privilegios (`uid 10001`) y escribe un único
+  archivo propio: el índice SQLite del Copiloto en
+  `/app/data/copiloto_nl_sql/wdi.sqlite3`, que se genera al arrancar a partir del
+  snapshot. Todo lo demás es de solo lectura.
+* `EXPOSE 8000` es el puerto interno esperado por el proxy del sitio.
+* La imagen **no** trae credenciales: `MONGODB_URI`, `MONGODB_DB` y
+  `ALLOWED_ORIGINS` se pasan por entorno.
+* El job `imagen` del workflow construye la imagen, comprueba que los snapshots
+  están dentro, que los tres servicios que los leen los abren, y que
+  `/api/v1/health/live` responde.
+
+#### Snapshots de runtime
+
+Los tres archivos son pequeños, versionados y deterministas; la imagen los copia
+(`COPY data/snapshots ./data/snapshots`):
+
+| Archivo | Servicio | Tamaño | SHA-256 (16) |
+|---|---|---|---|
+| `data/snapshots/banxico/corpus.json` | Briefing BANXICO | 7 168 B | `7e4a227349cc9085` |
+| `data/snapshots/copiloto/data.json` | Copiloto NL → SQL | 4 416 B | `2d241c70db41ac6a` |
+| `data/snapshots/incident-commander/data.json` | Data Incident Commander | 5 482 B | `8483d4ee6c5427e8` |
+
+El resto de `data/` (boletines de la CNBV, Atlas vial, marketing, M5) son
+entradas de importación: no se versionan ni se copian a la imagen, y se generan
+con los scripts `scripts/importar_*` a partir de sus fuentes públicas.
 
 ### 3.4 Pruebas
 
