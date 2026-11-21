@@ -1,0 +1,38 @@
+{
+  "dataset_id": "WB-WDI-MEX-2019-2025-v1",
+  "snapshot_date": "2026-11-15",
+  "geography": "México",
+  "geography_code": "MEX",
+  "period_start": 2019,
+  "period_end": 2025,
+  "license": "CC BY 4.0",
+  "observations": [
+    {"year":2019,"indicator_code":"NY.GDP.MKTP.KD.ZG","indicator":"Crecimiento del PIB real","value":-0.4,"unit":"% anual"},
+    {"year":2020,"indicator_code":"NY.GDP.MKTP.KD.ZG","indicator":"Crecimiento del PIB real","value":-8.4,"unit":"% anual"},
+    {"year":2021,"indicator_code":"NY.GDP.MKTP.KD.ZG","indicator":"Crecimiento del PIB real","value":6.0,"unit":"% anual"},
+    {"year":2022,"indicator_code":"NY.GDP.MKTP.KD.ZG","indicator":"Crecimiento del PIB real","value":3.7,"unit":"% anual"},
+    {"year":2023,"indicator_code":"NY.GDP.MKTP.KD.ZG","indicator":"Crecimiento del PIB real","value":3.1,"unit":"% anual"},
+    {"year":2024,"indicator_code":"NY.GDP.MKTP.KD.ZG","indicator":"Crecimiento del PIB real","value":1.4,"unit":"% anual"},
+    {"year":2025,"indicator_code":"NY.GDP.MKTP.KD.ZG","indicator":"Crecimiento del PIB real","value":0.6,"unit":"% anual"},
+    {"year":2019,"indicator_code":"FP.CPI.TOTL.ZG","indicator":"Inflación al consumidor","value":3.6359614213,"unit":"% anual"},
+    {"year":2020,"indicator_code":"FP.CPI.TOTL.ZG","indicator":"Inflación al consumidor","value":3.3968341557,"unit":"% anual"},
+    {"year":2021,"indicator_code":"FP.CPI.TOTL.ZG","indicator":"Inflación al consumidor","value":5.6892084768,"unit":"% anual"},
+    {"year":2022,"indicator_code":"FP.CPI.TOTL.ZG","indicator":"Inflación al consumidor","value":7.8962761917,"unit":"% anual"},
+    {"year":2023,"indicator_code":"FP.CPI.TOTL.ZG","indicator":"Inflación al consumidor","value":5.5279608731,"unit":"% anual"},
+    {"year":2024,"indicator_code":"FP.CPI.TOTL.ZG","indicator":"Inflación al consumidor","value":4.7222558845,"unit":"% anual"},
+    {"year":2025,"indicator_code":"FP.CPI.TOTL.ZG","indicator":"Inflación al consumidor","value":3.8095795004,"unit":"% anual"},
+    {"year":2019,"indicator_code":"SL.UEM.TOTL.ZS","indicator":"Desempleo total · estimación OIT","value":3.477,"unit":"% fuerza laboral"},
+    {"year":2020,"indicator_code":"SL.UEM.TOTL.ZS","indicator":"Desempleo total · estimación OIT","value":4.440,"unit":"% fuerza laboral"},
+    {"year":2021,"indicator_code":"SL.UEM.TOTL.ZS","indicator":"Desempleo total · estimación OIT","value":4.019,"unit":"% fuerza laboral"},
+    {"year":2022,"indicator_code":"SL.UEM.TOTL.ZS","indicator":"Desempleo total · estimación OIT","value":3.256,"unit":"% fuerza laboral"},
+    {"year":2023,"indicator_code":"SL.UEM.TOTL.ZS","indicator":"Desempleo total · estimación OIT","value":2.765,"unit":"% fuerza laboral"},
+    {"year":2024,"indicator_code":"SL.UEM.TOTL.ZS","indicator":"Desempleo total · estimación OIT","value":2.678,"unit":"% fuerza laboral"},
+    {"year":2025,"indicator_code":"SL.UEM.TOTL.ZS","indicator":"Desempleo total · estimación OIT","value":2.673,"unit":"% fuerza laboral"}
+  ],
+  "sources": [
+    {"indicator_code":"NY.GDP.MKTP.KD.ZG","title":"GDP growth (annual %) — Mexico","url":"https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG?locations=MX","data_url":"https://api.worldbank.org/v2/country/MEX/indicator/NY.GDP.MKTP.KD.ZG?format=json&date=2019:2025","definition":"Tasa de crecimiento anual del PIB a precios de mercado constantes."},
+    {"indicator_code":"FP.CPI.TOTL.ZG","title":"Inflation, consumer prices (annual %) — Mexico","url":"https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?locations=MX","data_url":"https://api.worldbank.org/v2/country/MEX/indicator/FP.CPI.TOTL.ZG?format=json&date=2019:2025","definition":"Variación anual de precios al consumidor, World Development Indicators."},
+    {"indicator_code":"SL.UEM.TOTL.ZS","title":"Unemployment, total (% of total labor force) — Mexico","url":"https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?locations=MX","data_url":"https://api.worldbank.org/v2/country/MEX/indicator/SL.UEM.TOTL.ZS?format=json&date=2019:2025","definition":"Estimación modelada por la OIT como porcentaje de la fuerza laboral; no mide informalidad ni subempleo."}
+  ],
+  "note":"Snapshot de demostración de series WDI. Los datos se conservan por indicador, año y unidad; no se suman indicadores expresados en unidades distintas. El script sync_worldbank.py permite refrescar desde la API oficial y registrar la fecha de extracción."
+}

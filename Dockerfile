@@ -20,6 +20,20 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app ./app
 COPY scripts ./scripts
 
+# Snapshots de runtime. Los tres servicios que los leen los abren en su
+# constructor, así que sin estos archivos la API no arranca:
+#   data/snapshots/banxico/corpus.json              → briefing BANXICO (RAG léxico)
+#   data/snapshots/copiloto/data.json               → Copiloto NL → SQL
+#   data/snapshots/incident-commander/data.json     → Data Incident Commander
+# El resto de `data/` queda fuera del contexto (ver .dockerignore): son entradas
+# de importación que no se versionan.
+COPY data/snapshots ./data/snapshots
+
+# Carpeta escribible para el índice SQLite que el Copiloto genera al arrancar
+# (`data/copiloto_nl_sql/wdi.sqlite3`). Se crea antes del chown para que el
+# usuario sin privilegios pueda escribirla.
+RUN mkdir -p /app/data/copiloto_nl_sql
+
 # Usuario sin privilegios.
 RUN useradd --create-home --uid 10001 appuser \
     && chown -R appuser:appuser /app
